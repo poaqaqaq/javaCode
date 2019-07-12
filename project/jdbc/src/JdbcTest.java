@@ -43,11 +43,10 @@ public class JdbcTest {
 
     @Test
     public void testConnection3() throws ClassNotFoundException, SQLException {
-        //直接加载mysql的jdbc类，DriverManager会自动搜寻并注册
+        //直接加载mysql的jdbc类，DriverManager会自动搜寻并注册git
         Class.forName("com.mysql.jdbc.Driver");
         Connection connection = DriverManager.getConnection(url, username, password);
         System.out.println(connection);
         connection.close();
     }
-
 }
