@@ -1,3 +1,5 @@
+package cn.young.test;
+
 import com.mysql.jdbc.Driver;
 import org.junit.Test;
 

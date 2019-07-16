@@ -1,4 +1,4 @@
-package util;
+package cn.young.util;
 
 import java.sql.*;
 
@@ -8,7 +8,8 @@ public class JdbcUtil {
     private static String password;
 
     static {
-        url = "jdbc:mysql://localhost:3307/snarte";
+        //characterEncoding设置数据库编码
+        url = "jdbc:mysql://localhost:3307/snarte?characterEncoding=UTF-8";
         user = "root";
         password = "mysql123";
         try {

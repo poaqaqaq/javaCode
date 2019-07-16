@@ -1,7 +1,14 @@
+package cn.young.test;
+
+import cn.young.entity.Basic;
 import org.junit.Test;
-import util.JdbcUtil;
+import cn.young.util.JdbcUtil;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 /*
 * PreparedStatement vs Statement
@@ -52,6 +59,57 @@ public class JdbcPreStatementTest {
             e.printStackTrace();
         } finally {
             JdbcUtil.close(connection, preparedStatement);
+        }
+    }
+
+
+    public List<Basic> getList() {
+        Random random = new Random();
+        List<Basic> list = new ArrayList<>();
+        for (int i = 0; i < 12; i++) {
+            Basic basic = new Basic();
+            basic.setCn_content("中文内容" + i);
+            basic.setEn_content("english" + i);
+            //nextInt范围：0-3，但是不包括3
+            basic.setType(random.nextInt(3) + 1);
+            basic.setCreated_at(new Timestamp(System.currentTimeMillis()));
+            basic.setUpdated_at(new Timestamp(System.currentTimeMillis()));
+            list.add(basic);
+        }
+        return list;
+    }
+
+    @Test
+    /*
+    * 	void addBatch(String sql)     添加批处理
+		void clearBatch()            清空批处理
+        int[] executeBatch()         执行批处理
+    * */
+    public void batch() {
+        List<Basic> list = getList();
+        Connection connection = JdbcUtil.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("insert into basics values(null,?,?,?,?,?)");
+            int i = 0;
+            for (Basic basic : list) {
+                preparedStatement.setString(1, basic.getCn_content());
+                preparedStatement.setString(2, basic.getEn_content());
+                preparedStatement.setInt(3, basic.getType());
+                preparedStatement.setTimestamp(4, basic.getCreated_at());
+                preparedStatement.setTimestamp(5, basic.getUpdated_at());
+                //设置完参数后加入到batch中
+                preparedStatement.addBatch();
+                i++;
+                if (i % 5 == 0) {
+                    //每5个batch执行一次
+                    int[] ints = preparedStatement.executeBatch();
+                    System.out.println(Arrays.toString(ints));
+                    //执行完后要清除batch
+                    preparedStatement.clearBatch();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

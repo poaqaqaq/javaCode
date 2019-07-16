@@ -1,11 +1,13 @@
-import org.junit.Test;
-import util.JdbcUtil;
+package cn.young.test;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import cn.young.entity.Basic;
+import org.junit.Test;
+import cn.young.util.JdbcUtil;
+
+import javax.xml.transform.Source;
+import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.Date;
 
 public class JdbcStatementTest {
@@ -91,4 +93,5 @@ public class JdbcStatementTest {
             JdbcUtil.close(connection, statement, resultSet);
         }
     }
+
 }
