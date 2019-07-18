@@ -80,7 +80,7 @@ public class JdbcPreStatement2 {
         PreparedStatement preparedStatement = null;
         FileReader fileReader = null;
         try {
-            preparedStatement = connection.prepareStatement("insert into text values(null,?)");
+            preparedStatement = connection.prepareStatement("insert into text(text) values(?)");
 //            preparedStatement.executeUpdate();
             //获取本类路径下的text文件路径，即text与本类同级
             String path = JdbcPreStatement2.class.getResource("text").getPath();
@@ -112,7 +112,7 @@ public class JdbcPreStatement2 {
     public void getBigText() {
         PreparedStatement preparedStatement = null;
         //如果是在Finally中关闭，则此值必须要初始化
-        Reader text=null;
+        Reader text = null;
         try {
             preparedStatement = connection.prepareStatement("select * from text where id = 1;");
             ResultSet set = preparedStatement.executeQuery();
@@ -135,10 +135,65 @@ public class JdbcPreStatement2 {
             e.printStackTrace();
         } finally {
             try {
-                text.close();
+                if (text != null) {
+                    text.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            JdbcUtil.close(connection, preparedStatement);
+        }
+    }
+
+    @Test
+    //存储二进制数据
+    public void setBlob() {
+        PreparedStatement preparedStatement = null;
+        InputStream resourceAsStream = null;
+        try {
+            preparedStatement = connection.prepareStatement("insert into text(`binary`) values(?)");
+            resourceAsStream = JdbcPreStatement2.class.getResourceAsStream("/test.png");
+            preparedStatement.setBinaryStream(1, resourceAsStream);
+            int i = preparedStatement.executeUpdate();
+            System.out.println(i);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resourceAsStream != null) {
+                    resourceAsStream.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            JdbcUtil.close(connection, preparedStatement);
+        }
+    }
+
+    @Test
+    //获取二进制数据
+    public void getBlob() {
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement("select `binary` from text where id = 3");
+            ResultSet set = preparedStatement.executeQuery();
+            byte[] bytes = new byte[1024];
+            int length;
+            while (set.next()) {
+                //获取输入流，读取blob内容
+                InputStream binaryStream = set.getBinaryStream(1);
+                //将blob内容写到png中
+                OutputStream outputStream = new FileOutputStream("E:/test.png");
+                while ((length = binaryStream.read(bytes)) != -1) {
+                    outputStream.write(bytes, 0, length);
+                }
+                outputStream.close();
+                binaryStream.close();
+            }
+            System.out.println("done");
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        } finally {
             JdbcUtil.close(connection, preparedStatement);
         }
     }
