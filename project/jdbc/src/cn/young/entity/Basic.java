@@ -57,4 +57,17 @@ public class Basic {
     public void setUpdated_at(Timestamp updated_at) {
         this.updated_at = updated_at;
     }
+
+    @Override
+    public String
+    toString() {
+        return "Basic{" +
+                "id=" + id +
+                ", cn_content='" + cn_content + '\'' +
+                ", en_content='" + en_content + '\'' +
+                ", type=" + type +
+                ", created_at=" + created_at +
+                ", updated_at=" + updated_at +
+                '}';
+    }
 }
