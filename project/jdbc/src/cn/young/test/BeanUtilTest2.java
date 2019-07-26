@@ -51,6 +51,7 @@ public class BeanUtilTest2 {
             // 当lambda时，外面的date，里面不可覆盖！
 //            ConvertUtils.register((aClass, o) -> {
 ////                System.out.println(date);
+            //此处如果用Date date将会提示变量已存在！
 //                Date date1 = null;
 //                //判断当是Date，而且值不为空时再进行转换
 //                if (aClass == Date.class && o != null && !"".equals(o.toString().trim())) {
