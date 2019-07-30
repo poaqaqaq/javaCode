@@ -34,6 +34,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
     @Override
     public Employee findById(int id) {
-        return null;
+        List<Employee> list = BaseDaoUtil.query("select * from" + tableName + " where id = ?", Employee.class, id);
+        return list.get(0);
     }
 }

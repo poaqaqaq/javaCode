@@ -44,14 +44,12 @@ public class TestBaseDao {
     }
 
     @Test
-    public void selectTest() {
+    public void selectAllTest() {
         List<Employee> all = employeeService.findAll();
         if (all != null) {
             for (Employee employee : all) {
                 System.out.println(employee);
             }
         }
-
     }
-
 }
