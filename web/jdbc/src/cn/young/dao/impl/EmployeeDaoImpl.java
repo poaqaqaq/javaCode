@@ -24,12 +24,12 @@ public class EmployeeDaoImpl implements EmployeeDao {
     @Override
     public void insert(Employee employee) {
         String sql = "insert into " + tableName + " values(null,?,?,?,?)";
-        BaseDaoUtil.update(sql, employee.getName(), employee.getAge(), employee.getSex(),employee.getDate());
+        BaseDaoUtil.update(sql, employee.getName(), employee.getAge(), employee.getSex(), employee.getDate());
     }
 
     @Override
     public List<Employee> findAll() {
-        return null;
+        return BaseDaoUtil.query("select * from" + tableName, Employee.class);
     }
 
     @Override
