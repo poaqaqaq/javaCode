@@ -1,19 +1,14 @@
 package cn.young.util;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.locale.converters.DateLocaleConverter;
-import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ColumnListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 
-import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -102,7 +97,7 @@ public class QueryRunnerDaoUtil {
     }
 
     public static <T> T query4Scalar(String sql, Object... params) {
-        Connection connection = JdbcUtil.getConnection();
+        Connection connection = JdbcUtil.getConnection ();
         QueryRunner queryRunner = new QueryRunner();
         T t = null;
         try {
