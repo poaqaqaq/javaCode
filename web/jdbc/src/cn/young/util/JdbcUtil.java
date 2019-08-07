@@ -1,6 +1,10 @@
 package cn.young.util;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.*;
+import java.util.Properties;
 
 public class JdbcUtil {
     private static String url;
@@ -8,10 +12,17 @@ public class JdbcUtil {
     private static String password;
 
     static {
+        Properties properties = new Properties();
+        try {
+            properties.load(JdbcUtil.class.getResourceAsStream("/db.properties"));
+            url = properties.getProperty("url");
+            user = properties.getProperty("username");
+            password = properties.getProperty("password");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         //characterEncoding设置数据库编码
-        url = "jdbc:mysql://localhost:3307/snarte?characterEncoding=UTF-8&generateSimpleParameterMetadata=true";
-        user = "root";
-        password = "mysql123";
+
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
