@@ -21,6 +21,7 @@ public class ListServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EmployeeService employeeService = new EmployeeServiceImpl2();
         request.setAttribute("list", employeeService.findAll());
-        request.getRequestDispatcher("/WEB-INF/list.jsp").forward(request, response);
+        System.out.println("list");
+//        request.getRequestDispatcher("/WEB-INF/list.jsp").forward(request, response);
     }
 }

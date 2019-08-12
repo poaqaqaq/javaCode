@@ -10,11 +10,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name = "LoginServlet", urlPatterns = "/login")
 public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("post");
         String name = request.getParameter("name");
         String password = request.getParameter("password");
         Employee employee = new Employee();
@@ -22,9 +24,9 @@ public class LoginServlet extends HttpServlet {
         employee.setPassword(password);
         EmployeeService employeeService = new EmployeeServiceImpl2();
         try {
-            request.getSession().setAttribute("info", employeeService.getInfoByNameAndPassword(employee));
+            Employee infoByNameAndPassword = employeeService.getInfoByNameAndPassword(employee);
+            request.getSession().setAttribute("info", infoByNameAndPassword);
             response.sendRedirect(request.getContextPath() + "/list");
-            response.getWriter().write("in22");
         } catch (LoginFailedException e) {
             request.setAttribute("error", e.getMessage());
             request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
@@ -32,6 +34,11 @@ public class LoginServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        System.out.println("beforeForward:"+session);
+        //转发时，Tomcat将会自动设置一个org.apache.catalina.session.StandardSessionFacade@xx的session
+        //所以判断用户是否登录必须要判断session里的userInfo！
         request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+        System.out.println("afterForward:"+request.getSession(false));
     }
 }

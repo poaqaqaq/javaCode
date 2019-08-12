@@ -20,9 +20,9 @@ public class AuthFilter implements Filter {
         //如果不是login，则需要校验session
         if (!request.getRequestURI().contains("login")) {
             HttpSession session = request.getSession(false);
-            if (session == null) {
+            if (session == null || session.getAttribute("userInfo") == null) {
                 response.sendRedirect(request.getContextPath() + "/login");
-                System.out.println("no:"+request.getRequestURI());
+                System.out.println("no:" + request.getRequestURI());
                 return;
             }
         }
