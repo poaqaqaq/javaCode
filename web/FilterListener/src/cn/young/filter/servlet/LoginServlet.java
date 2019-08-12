@@ -35,10 +35,12 @@ public class LoginServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
+        //返回null
         System.out.println("beforeForward:"+session);
         //转发时，Tomcat将会自动设置一个org.apache.catalina.session.StandardSessionFacade@xx的session
         //所以判断用户是否登录必须要判断session里的userInfo！
         request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+        //转发后有值
         System.out.println("afterForward:"+request.getSession(false));
     }
 }

@@ -15,18 +15,18 @@ public class AuthFilter implements Filter {
     }
 
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
-        HttpServletRequest request = (HttpServletRequest) req;
-        HttpServletResponse response = (HttpServletResponse) resp;
-        //如果不是login，则需要校验session
-        if (!request.getRequestURI().contains("login")) {
-            HttpSession session = request.getSession(false);
-            if (session == null || session.getAttribute("userInfo") == null) {
-                response.sendRedirect(request.getContextPath() + "/login");
-                System.out.println("no:" + request.getRequestURI());
-                return;
-            }
-        }
-        System.out.println("ok:"+request.getRequestURI());
+//        HttpServletRequest request = (HttpServletRequest) req;
+//        HttpServletResponse response = (HttpServletResponse) resp;
+//        //如果不是login，则需要校验session
+//        if (!request.getRequestURI().contains("login")) {
+//            HttpSession session = request.getSession(false);
+//            if (session == null || session.getAttribute("userInfo") == null) {
+//                response.sendRedirect(request.getContextPath() + "/login");
+//                System.out.println("no:" + request.getRequestURI());
+//                return;
+//            }
+//        }
+//        System.out.println("ok:"+request.getRequestURI());
         chain.doFilter(req, resp);
     }
 
