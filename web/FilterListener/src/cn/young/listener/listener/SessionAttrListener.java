@@ -8,6 +8,13 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 import javax.servlet.http.HttpSessionBindingEvent;
 
+/*
+    一共有3种属性变化监听器
+*   ServletRequestAttributeListener
+    HttpSessionAttributeListener
+    ServletContextAttributeListener
+* */
+
 @WebListener()
 public class SessionAttrListener implements HttpSessionAttributeListener {
 
