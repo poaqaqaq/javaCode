@@ -18,10 +18,13 @@ public class EncodingFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         //设置请求编码
         req.setCharacterEncoding("UTF-8");
-        String uri = request.getRequestURI();
-        //当不是css和js的时候设置编码与contentType
-        if (!uri.contains("css") && !uri.contains("js")) {
-            //设置响应编码，一定要在响应之前设置
+//        String uri = request.getRequestURI();
+//        //当不是css和js的时候设置编码与contentType
+//        if (!uri.endsWith(".css") && !uri.endsWith(".js")) {
+//            //设置响应编码，一定要在响应之前设置
+//            resp.setContentType("text/html;charset=" + encoding);
+//        }
+        if (!(boolean) request.getAttribute("isStatic")) {
             resp.setContentType("text/html;charset=" + encoding);
         }
         chain.doFilter(req, resp);
