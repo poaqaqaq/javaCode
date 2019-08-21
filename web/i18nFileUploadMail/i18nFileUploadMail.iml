@@ -26,5 +26,7 @@
     <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="library" name="jstl-1.2" level="project" />
     <orderEntry type="library" name="jaxen-1.1.6" level="project" />
+    <orderEntry type="library" name="commons-dbutils-1.7" level="project" />
+    <orderEntry type="library" name="commons-io-2.6" level="project" />
   </component>
 </module>
