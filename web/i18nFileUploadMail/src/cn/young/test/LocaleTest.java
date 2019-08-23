@@ -41,4 +41,12 @@ public class LocaleTest {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("cn.young.msg", locale);
         System.out.println(resourceBundle.getString("password"));
     }
+
+    @Test
+    public void testSay() {
+        String[] a = {"1", "2", "3"};
+        if (a[3] != null) {
+            System.out.println("ddd");
+        }
+    }
 }

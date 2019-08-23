@@ -52,7 +52,7 @@ public class Upload2Servlet extends HttpServlet {
                         SimpleDateFormat s = new SimpleDateFormat("yyyyMMddHHmmss");
                         String uuid = s.format(new Date());
                         //生成File对象，文件名为：uuid+#+真实文件名
-                        File file = new File(savePath, uuid + "#" + fileItem.getName());
+                        File file = new File(savePath, uuid + "$" + fileItem.getName());
                         fileItem.write(file);
                         //删除临时文件
                         fileItem.delete();
@@ -63,6 +63,8 @@ public class Upload2Servlet extends HttpServlet {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        } else {
+            System.out.println("非文件上传表单");
         }
 
     }

@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 
+//使用Part必须要添加此注解
 @MultipartConfig
 @WebServlet(name = "UploadServlet", urlPatterns = "/upload1")
 public class UploadServlet extends HttpServlet {
@@ -30,7 +31,7 @@ public class UploadServlet extends HttpServlet {
         //如果直接获取file参数，会返回null
 //        System.out.println(request.getParameter("file"));
         String savePath = this.getServletContext().getRealPath("upload");
-        //获取单个文件上传表单流
+        //获取单个文件上传表单流，Servlet3.0支持
         Part file = request.getPart("file");
         //从流中获取原始头信息：Content-Disposition: form-data; name="photo"; filename="测试文件.txt"
         String content = file.getHeader("Content-Disposition");
