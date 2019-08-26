@@ -22,10 +22,13 @@ public class DownloadServlet extends HttpServlet {
         if (fileName != null && !"".equals(fileName.trim())) {
             String realPath = this.getServletContext().getRealPath("/upload/" + fileName);
             File file = new File(realPath);
+            //下载必须要用此头
             response.setHeader("Content-Disposition", "attachment;filename=" + handled);
+            //输入流读取文件
             FileInputStream in = new FileInputStream(file);
             byte[] bytes = new byte[1024];
             int length;
+            //通过response的输出流输出到客户端！
             ServletOutputStream outputStream = response.getOutputStream();
             while ((length = in.read(bytes)) != -1) {
                 outputStream.write(bytes, 0, length);

@@ -13,6 +13,11 @@
 </head>
 <body>
 <a href="${pageContext.request.contextPath}/upload2">上传文件</a>
+<!--
+如果路径是/demo1，比如当前访问地址是http://localhost:8080/gather/list，则此访问地址是：localhost:8080/demo1
+如果路径是demo1，则此访问地址是：http://localhost:8080/gather/demo1；加上/是取根路径，不加/则是当前目录(比如此处是gather/)加上访问路径
+-->
+<a href="demo1">bbb</a>
 <table border="1">
     <tr>
         <td>文件id</td>
@@ -27,7 +32,12 @@
                     <td>${status.count}</td>
                     <td>${item.key}</td>
                     <td>${item.value}</td>
-                    <td><a href="${pageContext.request.contextPath}/download?origin=${item.key}&handled=${item.value}">下载</a></td>
+                    <td>
+                        <a href="${pageContext.request.contextPath}/download?origin=${item.key}&handled=${item.value}">下载</a>
+                        <br/>
+                        <!--此处就算直接写上文件路径，也不会下载文件，将会在浏览器中打开此文件而已-->
+                        <a href="upload/${item.key}">下载2</a>
+                    </td>
                 </tr>
             </c:forEach>
         </c:when>
