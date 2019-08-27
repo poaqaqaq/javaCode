@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
 
 @WebServlet(name = "DownloadServlet", urlPatterns = "/download")
 public class DownloadServlet extends HttpServlet {
@@ -19,6 +20,8 @@ public class DownloadServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String handled = request.getParameter("handled");
         String fileName = request.getParameter("origin");
+        // 如果文件名是中文，需要进行url编码
+        fileName = URLEncoder.encode(fileName, "UTF-8");
         if (fileName != null && !"".equals(fileName.trim())) {
             String realPath = this.getServletContext().getRealPath("/upload/" + fileName);
             File file = new File(realPath);
