@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 //当有同名Servlet时，name需要写上包名，或者直接不写name，@WebServlet注解会自动获取当前包与类名
-@WebServlet(name = "cn.young.listener.servlet.LoginServlet", urlPatterns = "/aa")
+@WebServlet(name = "cn.young.listener.dao.LoginServlet", urlPatterns = "/aa")
 public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        System.out.println("post");

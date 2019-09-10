@@ -1,5 +1,7 @@
 package cn.young.filter.util;
 
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+import com.mchange.v2.c3p0.jboss.C3P0PooledDataSource;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.locale.converters.DateLocaleConverter;
 import org.apache.commons.dbutils.QueryRunner;
@@ -8,6 +10,7 @@ import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ColumnListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
@@ -23,8 +26,18 @@ import java.util.List;
 * */
 
 public class QueryRunnerDaoUtil {
+    private static QueryRunner qr;
+
     static {
+        //BeanUtils中如果是String参数将不会自动转换为对应类的Date类型，因此需要注册转换器
         ConvertUtils.register(new DateLocaleConverter(), Date.class);
+        DataSource dataSource = new ComboPooledDataSource();
+        qr = new QueryRunner(dataSource);
+    }
+
+
+    public static QueryRunner getQueryRunner() {
+        return qr;
     }
 
     public static void update(String sql, Object... params) {
@@ -98,7 +111,7 @@ public class QueryRunnerDaoUtil {
     }
 
     public static <T> T query4Scalar(String sql, Object... params) {
-        Connection connection = JdbcUtil.getConnection ();
+        Connection connection = JdbcUtil.getConnection();
         QueryRunner queryRunner = new QueryRunner();
         T t = null;
         try {

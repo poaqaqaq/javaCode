@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSessionBindingEvent;
 public class BigListener implements ServletContextListener,
         HttpSessionListener, HttpSessionAttributeListener {
 
-    // Public constructor is required by servlet spec
+    // Public constructor is required by dao spec
     public BigListener() {
     }
 
@@ -24,7 +24,7 @@ public class BigListener implements ServletContextListener,
     }
 
     public void contextDestroyed(ServletContextEvent sce) {
-      /* This method is invoked when the Servlet Context 
+      /* This method is invoked when the dao Context
          (the Web application) is undeployed or 
          Application Server shuts down.
       */
